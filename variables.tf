@@ -55,3 +55,13 @@ variable "postgres_version" {
   description = "The Postgres version"
   type        = string
 }
+
+variable "certificate_name" {
+  description = "SSL certificate name"
+  type        = string
+}
+
+variable "trusted_ip_address" {
+  description = "Trusted IP address"
+  type        = string
+}

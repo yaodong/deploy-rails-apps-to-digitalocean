@@ -9,7 +9,7 @@ resource "digitalocean_database_cluster" "postgres" {
   node_count           = 1
 }
 
-resource "digitalocean_database_firewall" "web_droplet_routes" {
+resource "digitalocean_database_firewall" "trusted_sources" {
   cluster_id = digitalocean_database_cluster.postgres.id
 
   rule {
@@ -17,4 +17,13 @@ resource "digitalocean_database_firewall" "web_droplet_routes" {
     value = "${var.project_name}_${var.env}_web"
   }
 
+  rule {
+    type  = "ip_addr"
+    value = var.trusted_ip_address
+  }
+}
+
+resource "digitalocean_database_user" "this" {
+  cluster_id = digitalocean_database_cluster.postgres.id
+  name       = "${var.project_name}_${var.env}"
 }
